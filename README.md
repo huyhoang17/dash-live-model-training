@@ -10,6 +10,7 @@ Try out the [demo app here](https://dash-live-model-training.plot.ly/).
 ## Getting Started
 
 ### Using the demo
+To use the demo, simply choose the model and dataset for which you want to replay the training, __using the two dropdown menus at the top of the page__. For every dataset, we trained a simple 1-layer Neural Network, and a small Convolutional Neural Network that were taken from the official [Tensorflow](https://www.tensorflow.org/tutorials/layers) and [Keras](https://github.com/keras-team/keras/blob/master/examples/cifar10_cnn.py) tutorials.
 
 ### Running the app locally
 
