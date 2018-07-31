@@ -17,18 +17,18 @@ To use the demo, simply choose the model and dataset for which you want to repla
 First create a virtual environment with conda or venv inside a temp folder, then activate it.
 
 ```
-virtualenv <name of the venv>
+virtualenv dash-live-model-training-venv
 
 # Windows
-<name of the venv>\Scripts\activate
+dash-live-model-training-venv\Scripts\activate
 # Or Linux
 source venv/bin/activate
 ```
 
 Clone the git repo, then install the requirements with pip
 ```
-git clone <link to repo>
-cd <name of repo>
+git clone https://github.com/plotly/dash-live-model-training.git
+cd dash-live-model-training
 pip install -r requirements.txt
 ```
 
