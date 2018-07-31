@@ -1,8 +1,8 @@
 # Dash Live Model Training Viewer
 
 ![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
-![GitHub top language](https://img.shields.io/github/languages/top/badges/shields.svg)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/badges/shields.svg)
+[![GitHub stars](https://img.shields.io/github/stars/plotly/dash-live-model-training.svg)](https://github.com/plotly/dash-live-model-training/stargazers)
+
 
 This is a demo of the Dash interactive Python framework developed by [Plotly](https://plot.ly/).
 
