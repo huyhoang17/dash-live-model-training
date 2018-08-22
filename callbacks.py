@@ -28,10 +28,10 @@ class LogAfterBatch(Callback):
         with open(self.filename, 'a', newline='') as file:
             writer = csv.writer(file, delimiter=',')
             writer.writerow([
-                batch,
+                self.step,
                 acc,
-                loss,
                 self.val_acc,
+                loss,
                 self.val_loss
             ])
 

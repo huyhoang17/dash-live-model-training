@@ -10,7 +10,8 @@ from plotly import tools
 
 from demo_utils import demo_components, demo_callbacks, demo_explanation
 
-LOGFILE = 'examples/run_log.csv'
+LOGFILE = 'run_log_keras.csv'
+
 
 app = dash.Dash(__name__)
 server = app.server
