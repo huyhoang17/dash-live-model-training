@@ -3,6 +3,7 @@ import time
 from app import app
 import multiprocessing
 
+
 def run():
     app.server.logger.disabled = True
     log = logging.getLogger('werkzeug')
