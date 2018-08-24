@@ -1,4 +1,8 @@
-'''Trains a simple deep NN on the MNIST dataset.
+'''
+This usage file is directly taken from the official Keras website at:
+https://github.com/keras-team/keras/blob/master/examples/mnist_mlp.py
+
+Trains a simple deep NN on the MNIST dataset.
 
 Gets to 98.40% test accuracy after 20 epochs
 (there is *a lot* of margin for parameter tuning).
@@ -52,8 +56,8 @@ if __name__ == '__main__':
 
     log = LogAfterBatch()
 
-    Viewer().open()
-    print("Open your viewer at 127.0.0.1:8055")
+    viewer = Viewer()
+    viewer.open()
 
     history = model.fit(x_train, y_train,
                         batch_size=batch_size,
@@ -64,3 +68,5 @@ if __name__ == '__main__':
     score = model.evaluate(x_test, y_test, verbose=0)
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])
+
+    viewer.close()

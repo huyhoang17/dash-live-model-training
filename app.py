@@ -183,7 +183,7 @@ def update_graph(graph_id,
     if run_log_json:  # exists
         layout = go.Layout(
             title=graph_title,
-            margin=go.Margin(l=50, r=50, b=50, t=50),
+            margin=go.layout.Margin(l=50, r=50, b=50, t=50),
             yaxis={'title': yaxis_title}
         )
 
