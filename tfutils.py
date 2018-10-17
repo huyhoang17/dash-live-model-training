@@ -3,8 +3,7 @@ import csv
 import os
 
 
-def add_eval(y,
-             y_):
+def add_eval(y, y_):
     """
     Add evaluation metrics.
     :param y: The predicted y, aka logits
@@ -17,8 +16,7 @@ def add_eval(y,
     accuracy = tf.reduce_mean(correct_prediction)
 
     # Compute Cross Entropy
-    cross_entropy = tf.losses.sparse_softmax_cross_entropy(
-        labels=y_, logits=y)
+    cross_entropy = tf.losses.sparse_softmax_cross_entropy(labels=y_, logits=y)
 
     return accuracy, cross_entropy
 
@@ -42,7 +40,8 @@ def write_data(accuracy,
     :return:
     """
     if step_range not in range(1, 1001):
-        raise ValueError('Invalid step range. Please choose a value between 1 and 1000')
+        raise ValueError(
+            'Invalid step range. Please choose a value between 1 and 1000')
 
     # At the start, we delete the log residual log file from previous training
     if step == 0:
@@ -60,7 +59,10 @@ def write_data(accuracy,
         # Write CSV
         with open(filename, 'a', newline='') as file:
             writer = csv.writer(file, delimiter=',')
-            writer.writerow([step, train_accuracy, val_accuracy, train_cross_entropy, val_cross_entropy])
+            writer.writerow([
+                step, train_accuracy, val_accuracy, train_cross_entropy,
+                val_cross_entropy
+            ])
 
         return train_accuracy, val_accuracy, train_cross_entropy, val_cross_entropy
 

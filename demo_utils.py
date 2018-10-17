@@ -14,13 +14,9 @@ def demo_explanation(demo_mode):
             html.Div([
                 dcc.Markdown(demo_md, className='markdown'),
             ],
-                className='ten columns'
-            ),
+                className='ten columns'),
             className='row',
-            style={
-                'margin': '20px'
-            }
-        )
+            style={'margin': '20px'})
 
 
 def demo_components(demo_mode):
@@ -33,35 +29,49 @@ def demo_components(demo_mode):
             dcc.Interval(
                 id='interval-simulated-step',
                 interval=125,  # Updates every 100 milliseconds, i.e. every step takes 25 ms
-                n_intervals=0
-            ),
-
-            html.Div(className="row", style={'margin-bottom':'8px'}, children=[
-                html.Div(className="ten columns", children=[
-                    html.Div(className="six columns", children=dcc.Dropdown(
-                        id='dropdown-demo-dataset',
-                        options=[
-                            {'label': 'CIFAR 10', 'value': 'cifar'},
-                            {'label': 'MNIST', 'value': 'mnist'},
-                            {'label': 'Fashion MNIST', 'value': 'fashion'}
-                        ],
-                        placeholder="Select a demo dataset",
-                        searchable=False
-                    )),
-
-                    html.Div(className="six columns", children=dcc.Dropdown(
-                        id='dropdown-simulation-model',
-                        options=[
-                            {'label': '1-Layer Neural Net', 'value': 'softmax'},
-                            {'label': 'Simple Conv Net', 'value': 'cnn'}
-                        ],
-                        placeholder="Select Model to Simulate",
-                        searchable=False
-                    ))
-                ]),
-
-                html.Div(id="div-total-step-count", className="two columns")
-            ])
+                n_intervals=0),
+            html.Div(
+                className="row",
+                style={'margin-bottom': '8px'},
+                children=[
+                    html.Div(
+                        className="ten columns",
+                        children=[
+                            html.Div(
+                                className="six columns",
+                                children=dcc.Dropdown(
+                                    id='dropdown-demo-dataset',
+                                    options=[{
+                                        'label': 'CIFAR 10',
+                                        'value': 'cifar'
+                                    }, {
+                                        'label': 'MNIST',
+                                        'value': 'mnist'
+                                    },
+                                        {
+                                        'label': 'Fashion MNIST',
+                                                 'value': 'fashion'
+                                    }],
+                                    placeholder="Select a demo dataset",
+                                    searchable=False)),
+                            html.Div(
+                                className="six columns",
+                                children=dcc.Dropdown(
+                                    id='dropdown-simulation-model',
+                                    options=[{
+                                        'label': '1-Layer Neural Net',
+                                        'value': 'softmax'
+                                    },
+                                        {
+                                        'label': 'Simple Conv Net',
+                                                 'value': 'cnn'
+                                    }],
+                                    placeholder="Select Model to Simulate",
+                                    searchable=False))
+                        ]),
+                    html.Div(
+                        id="div-total-step-count", className="two columns")
+                ])
         ]
 
     else:
@@ -70,30 +80,50 @@ def demo_components(demo_mode):
 
 def demo_callbacks(app, demo_mode):
     if demo_mode:
+
         @app.server.before_first_request
         def load_demo_run_logs():
             global data_dict, demo_md
 
-            names = ['step', 'train accuracy', 'val accuracy', 'train cross entropy', 'val cross entropy']
+            names = [
+                'step', 'train accuracy', 'val accuracy',
+                'train cross entropy', 'val cross entropy'
+            ]
 
             data_dict = {
                 'softmax': {
-                    'cifar': pd.read_csv('demo_run_logs/cifar_softmax_run_log.csv', names=names),
-                    'mnist': pd.read_csv('demo_run_logs/mnist_softmax_run_log.csv', names=names),
-                    'fashion': pd.read_csv('demo_run_logs/fashion_softmax_run_log.csv', names=names)
+                    'cifar':
+                    pd.read_csv(
+                        'demo_run_logs/cifar_softmax_run_log.csv',
+                        names=names),
+                    'mnist':
+                    pd.read_csv(
+                        'demo_run_logs/mnist_softmax_run_log.csv',
+                        names=names),
+                    'fashion':
+                    pd.read_csv(
+                        'demo_run_logs/fashion_softmax_run_log.csv',
+                        names=names)
                 },
-
                 'cnn': {
-                    'cifar': pd.read_csv('demo_run_logs/cifar_cnn_run_log.csv', names=names),
-                    'mnist': pd.read_csv('demo_run_logs/mnist_cnn_run_log.csv', names=names),
-                    'fashion': pd.read_csv('demo_run_logs/fashion_cnn_run_log.csv', names=names)
+                    'cifar':
+                    pd.read_csv(
+                        'demo_run_logs/cifar_cnn_run_log.csv', names=names),
+                    'mnist':
+                    pd.read_csv(
+                        'demo_run_logs/mnist_cnn_run_log.csv', names=names),
+                    'fashion':
+                    pd.read_csv(
+                        'demo_run_logs/fashion_cnn_run_log.csv', names=names)
                 }
             }
 
-        @app.callback(Output('storage-simulated-run', 'children'),
-                      [Input('interval-simulated-step', 'n_intervals')],
-                      [State('dropdown-demo-dataset', 'value'),
-                       State('dropdown-simulation-model', 'value')])
+        @app.callback(
+            Output('storage-simulated-run', 'children'),
+            [Input('interval-simulated-step', 'n_intervals')], [
+                State('dropdown-demo-dataset', 'value'),
+                State('dropdown-simulation-model', 'value')
+            ])
         def simulate_run(n_intervals, demo_dataset, simulation_model):
             if simulation_model and demo_dataset and n_intervals > 0:
                 step = n_intervals * 5
@@ -104,21 +134,27 @@ def demo_callbacks(app, demo_mode):
 
                 return json
 
-        @app.callback(Output('interval-simulated-step', 'n_intervals'),
-                      [Input('dropdown-demo-dataset', 'value'),
-                       Input('dropdown-simulation-model', 'value')])
+        @app.callback(
+            Output('interval-simulated-step', 'n_intervals'), [
+                Input('dropdown-demo-dataset', 'value'),
+                Input('dropdown-simulation-model', 'value')
+            ])
         def reset_interval_simulated_step(*_):
             return 0
 
-        @app.callback(Output('run-log-storage', 'children'),
-                      [Input('interval-log-update', 'n_intervals')],
-                      [State('storage-simulated-run', 'children')])
+        @app.callback(
+            Output('run-log-storage',
+                   'children'), [Input('interval-log-update', 'n_intervals')],
+            [State('storage-simulated-run', 'children')])
         def get_run_log(_, simulated_run):
             if simulate_run:
                 return simulated_run
 
-        @app.callback(Output('div-total-step-count', 'children'),
-                      [Input('dropdown-demo-dataset', 'value')])
+        @app.callback(
+            Output('div-total-step-count', 'children'),
+            [Input('dropdown-demo-dataset', 'value')])
         def total_step_count(dataset_name):
             dataset = data_dict['softmax'][dataset_name]
-            return html.H6(f"Total Steps: {dataset['step'].iloc[-1]}", style={'margin-top': '3px'})
+            return html.H6(
+                f"Total Steps: {dataset['step'].iloc[-1]}",
+                style={'margin-top': '3px'})
